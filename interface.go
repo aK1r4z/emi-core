@@ -25,7 +25,7 @@ type Logger interface {
 
 type APIClient interface {
 	SendPrivateMessage(ctx context.Context, request api.SendPrivateMessageRequest) (*api.SendPrivateMessageResponse, error)
-	SendGroupMessage(ctx context.Context, request api.SendGroupMessageRequest) (*api.SendPrivateMessageResponse, error)
+	SendGroupMessage(ctx context.Context, request api.SendGroupMessageRequest) (*api.SendGroupMessageResponse, error)
 	// [TODO] 包装更多 API 方法
 }
 
