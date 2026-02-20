@@ -49,5 +49,5 @@ type EventSource interface {
 
 type EventHandler interface {
 	milky.EventDescriber
-	Handle(*Bot, milky.Event, milky.RawEvent)
+	Handle(Bot, milky.Event, milky.RawEvent)
 }
