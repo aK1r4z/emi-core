@@ -1,6 +1,5 @@
 package emi_core
 
-
 type Endpoint string
 
 const (
