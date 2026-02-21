@@ -10,45 +10,46 @@ var ErrInvalidEventType = errors.New("invalid event type")
 type EventType string
 
 const (
-	BotOfflineEventType                EventType = "bot_offline"
-	MessageReceiveEventType            EventType = "message_receive"
-	MessageRecallEventType             EventType = "message_recall"
-	FriendRequestEventType             EventType = "friend_request"
-	GroupJoinRequestEventType          EventType = "group_join_request"
-	GroupInvitedJoinRequestEventType   EventType = "group_invited_join_request"
-	GroupInvitationEventType           EventType = "group_invitation"
-	FriendNudgeEventType               EventType = "friend_nudge"
-	FriendFileUploadEventType          EventType = "friend_file_upload"
-	GroupAdminChangeEventType          EventType = "group_admin_change"
-	GroupEssenceMessageChangeEventType EventType = "group_essence_message_change"
-	GroupMemberIncreaseEventType       EventType = "group_member_increase"
-	GroupMemberDecreaseEventType       EventType = "group_member_decrease"
-	GroupNameChangeEventType           EventType = "group_name_change"
-	GroupMessageReactionEventType      EventType = "group_message_reaction"
-	GroupMuteEventType                 EventType = "group_mute"
-	GroupWholeMuteEventType            EventType = "group_whole_mute"
-	GroupNudgeEventType                EventType = "group_nudge"
-	GroupFileUploadEventType           EventType = "group_file_upload"
+	EventBotOffline                EventType = "bot_offline"
+	EventMessageReceive            EventType = "message_receive"
+	EventMessageRecall             EventType = "message_recall"
+	EventFriendRequest             EventType = "friend_request"
+	EventGroupJoinRequest          EventType = "group_join_request"
+	EventGroupInvitedJoinRequest   EventType = "group_invited_join_request"
+	EventGroupInvitation           EventType = "group_invitation"
+	EventFriendNudge               EventType = "friend_nudge"
+	EventFriendFileUpload          EventType = "friend_file_upload"
+	EventGroupAdminChange          EventType = "group_admin_change"
+	EventGroupEssenceMessageChange EventType = "group_essence_message_change"
+	EventGroupMemberIncrease       EventType = "group_member_increase"
+	EventGroupMemberDecrease       EventType = "group_member_decrease"
+	EventGroupNameChange           EventType = "group_name_change"
+	EventGroupMessageReaction      EventType = "group_message_reaction"
+	EventGroupMute                 EventType = "group_mute"
+	EventGroupWholeMute            EventType = "group_whole_mute"
+	EventGroupNudge                EventType = "group_nudge"
+	EventGroupFileUpload           EventType = "group_file_upload"
 )
 
 func (e *EventType) IsValid() bool {
 	switch *e {
-	case FriendRequestEventType,
-		GroupJoinRequestEventType,
-		GroupInvitedJoinRequestEventType,
-		GroupInvitationEventType,
-		FriendNudgeEventType,
-		FriendFileUploadEventType,
-		GroupAdminChangeEventType,
-		GroupEssenceMessageChangeEventType,
-		GroupMemberIncreaseEventType,
-		GroupMemberDecreaseEventType,
-		GroupNameChangeEventType,
-		GroupMessageReactionEventType,
-		GroupMuteEventType,
-		GroupWholeMuteEventType,
-		GroupNudgeEventType,
-		GroupFileUploadEventType:
+	case
+		EventFriendRequest,
+		EventGroupJoinRequest,
+		EventGroupInvitedJoinRequest,
+		EventGroupInvitation,
+		EventFriendNudge,
+		EventFriendFileUpload,
+		EventGroupAdminChange,
+		EventGroupEssenceMessageChange,
+		EventGroupMemberIncrease,
+		EventGroupMemberDecrease,
+		EventGroupNameChange,
+		EventGroupMessageReaction,
+		EventGroupMute,
+		EventGroupWholeMute,
+		EventGroupNudge,
+		EventGroupFileUpload:
 		return true
 	}
 	return false
@@ -62,13 +63,6 @@ func FromString(s string) (EventType, error) {
 	return e, nil
 }
 
-type RawEvent struct {
-	Type   EventType       `json:"event_type"`
-	Time   int64           `json:"time"`
-	SelfID int64           `json:"self_id"`
-	Data   json.RawMessage `json:"data"`
-}
-
 type EventDescriber interface {
 	Type() EventType
 }
@@ -78,18 +72,25 @@ type Event interface {
 	New() Event
 }
 
+type RawEvent struct {
+	Type   EventType       `json:"event_type"`
+	Time   int64           `json:"time"`
+	SelfID int64           `json:"self_id"`
+	Data   json.RawMessage `json:"data"`
+}
+
 type BotOfflineEvent struct {
 	Reason string `json:"reason"`
 }
 
-func (e *BotOfflineEvent) Type() EventType { return BotOfflineEventType }
+func (e *BotOfflineEvent) Type() EventType { return EventBotOffline }
 func (e *BotOfflineEvent) New() Event      { return &BotOfflineEvent{} }
 
 type MessageReceiveEvent struct {
 	IncomingMessage
 }
 
-func (e *MessageReceiveEvent) Type() EventType { return MessageReceiveEventType }
+func (e *MessageReceiveEvent) Type() EventType { return EventMessageReceive }
 func (e *MessageReceiveEvent) New() Event      { return &MessageReceiveEvent{} }
 
 type MessageRecallEvent struct {
@@ -101,7 +102,7 @@ type MessageRecallEvent struct {
 	DisplaySuffix string       `json:"display_suffix"`
 }
 
-func (e *MessageRecallEvent) Type() EventType { return MessageRecallEventType }
+func (e *MessageRecallEvent) Type() EventType { return EventMessageRecall }
 func (e *MessageRecallEvent) New() Event      { return &MessageRecallEvent{} }
 
 type FriendRequestEvent struct {
@@ -111,7 +112,7 @@ type FriendRequestEvent struct {
 	Via          string `json:"via"`
 }
 
-func (e *FriendRequestEvent) Type() EventType { return FriendRequestEventType }
+func (e *FriendRequestEvent) Type() EventType { return EventFriendRequest }
 func (e *FriendRequestEvent) New() Event      { return &FriendRequestEvent{} }
 
 type GroupJoinRequestEvent struct {
@@ -122,7 +123,7 @@ type GroupJoinRequestEvent struct {
 	Comment         string `json:"comment"`
 }
 
-func (e *GroupJoinRequestEvent) Type() EventType { return GroupJoinRequestEventType }
+func (e *GroupJoinRequestEvent) Type() EventType { return EventGroupJoinRequest }
 func (e *GroupJoinRequestEvent) New() Event      { return &GroupJoinRequestEvent{} }
 
 type GroupInvitedJoinRequestEvent struct {
@@ -132,7 +133,7 @@ type GroupInvitedJoinRequestEvent struct {
 	TargetUserID    int64 `json:"target_user_id"`
 }
 
-func (e *GroupInvitedJoinRequestEvent) Type() EventType { return GroupInvitedJoinRequestEventType }
+func (e *GroupInvitedJoinRequestEvent) Type() EventType { return EventGroupInvitedJoinRequest }
 func (e *GroupInvitedJoinRequestEvent) New() Event      { return &GroupInvitedJoinRequestEvent{} }
 
 type GroupInvitationEvent struct {
@@ -141,7 +142,7 @@ type GroupInvitationEvent struct {
 	InitiatorID   int64 `json:"initiator_id"`
 }
 
-func (e *GroupInvitationEvent) Type() EventType { return GroupInvitationEventType }
+func (e *GroupInvitationEvent) Type() EventType { return EventGroupInvitation }
 func (e *GroupInvitationEvent) New() Event      { return &GroupInvitationEvent{} }
 
 type FriendNudgeEvent struct {
@@ -153,7 +154,7 @@ type FriendNudgeEvent struct {
 	DisplayActionImageURL string `json:"display_action_img_url"`
 }
 
-func (e *FriendNudgeEvent) Type() EventType { return FriendNudgeEventType }
+func (e *FriendNudgeEvent) Type() EventType { return EventFriendNudge }
 func (e *FriendNudgeEvent) New() Event      { return &FriendNudgeEvent{} }
 
 type FriendFileUploadEvent struct {
@@ -165,7 +166,7 @@ type FriendFileUploadEvent struct {
 	IsSelf   bool   `json:"is_self"`
 }
 
-func (e *FriendFileUploadEvent) Type() EventType { return FriendFileUploadEventType }
+func (e *FriendFileUploadEvent) Type() EventType { return EventFriendFileUpload }
 func (e *FriendFileUploadEvent) New() Event      { return &FriendFileUploadEvent{} }
 
 type GroupAdminChangeEvent struct {
@@ -175,7 +176,7 @@ type GroupAdminChangeEvent struct {
 	IsSet      bool  `json:"is_set"`
 }
 
-func (e *GroupAdminChangeEvent) Type() EventType { return GroupAdminChangeEventType }
+func (e *GroupAdminChangeEvent) Type() EventType { return EventGroupAdminChange }
 func (e *GroupAdminChangeEvent) New() Event      { return &GroupAdminChangeEvent{} }
 
 type GroupEssenceMessageChangeEvent struct {
@@ -185,7 +186,7 @@ type GroupEssenceMessageChangeEvent struct {
 	IsSet      bool  `json:"is_set"`
 }
 
-func (e *GroupEssenceMessageChangeEvent) Type() EventType { return GroupEssenceMessageChangeEventType }
+func (e *GroupEssenceMessageChangeEvent) Type() EventType { return EventGroupEssenceMessageChange }
 func (e *GroupEssenceMessageChangeEvent) New() Event      { return &GroupEssenceMessageChangeEvent{} }
 
 type GroupMemberIncreaseEvent struct {
@@ -195,7 +196,7 @@ type GroupMemberIncreaseEvent struct {
 	InvitorID  *int64 `json:"invitor_id"`  // 邀请者 QQ 号，如果是邀请入群
 }
 
-func (e *GroupMemberIncreaseEvent) Type() EventType { return GroupMemberIncreaseEventType }
+func (e *GroupMemberIncreaseEvent) Type() EventType { return EventGroupMemberIncrease }
 func (e *GroupMemberIncreaseEvent) New() Event      { return &GroupMemberIncreaseEvent{} }
 
 type GroupMemberDecreaseEvent struct {
@@ -204,7 +205,7 @@ type GroupMemberDecreaseEvent struct {
 	OperatorID *int64 `json:"operator_id"`
 }
 
-func (e *GroupMemberDecreaseEvent) Type() EventType { return GroupMemberDecreaseEventType }
+func (e *GroupMemberDecreaseEvent) Type() EventType { return EventGroupMemberDecrease }
 func (e *GroupMemberDecreaseEvent) New() Event      { return &GroupMemberDecreaseEvent{} }
 
 type GroupNameChangeEvent struct {
@@ -213,7 +214,7 @@ type GroupNameChangeEvent struct {
 	OperatorID   int64  `json:"operator_id"`
 }
 
-func (e *GroupNameChangeEvent) Type() EventType { return GroupNameChangeEventType }
+func (e *GroupNameChangeEvent) Type() EventType { return EventGroupNameChange }
 func (e *GroupNameChangeEvent) New() Event      { return &GroupNameChangeEvent{} }
 
 type GroupMessageReactionEvent struct {
@@ -224,7 +225,7 @@ type GroupMessageReactionEvent struct {
 	IsAdd      bool   `json:"is_add"`
 }
 
-func (e *GroupMessageReactionEvent) Type() EventType { return GroupMessageReactionEventType }
+func (e *GroupMessageReactionEvent) Type() EventType { return EventGroupMessageReaction }
 func (e *GroupMessageReactionEvent) New() Event      { return &GroupMessageReactionEvent{} }
 
 type GroupMuteEvent struct {
@@ -234,7 +235,7 @@ type GroupMuteEvent struct {
 	Duration   int32 `json:"duration"` // 禁言时长（秒），为 0 表示取消禁言
 }
 
-func (e *GroupMuteEvent) Type() EventType { return GroupMuteEventType }
+func (e *GroupMuteEvent) Type() EventType { return EventGroupMute }
 func (e *GroupMuteEvent) New() Event      { return &GroupMuteEvent{} }
 
 type GroupWholeMuteEvent struct {
@@ -243,7 +244,7 @@ type GroupWholeMuteEvent struct {
 	IsMute     bool  `json:"is_mute"`
 }
 
-func (e *GroupWholeMuteEvent) Type() EventType { return GroupWholeMuteEventType }
+func (e *GroupWholeMuteEvent) Type() EventType { return EventGroupWholeMute }
 func (e *GroupWholeMuteEvent) New() Event      { return &GroupWholeMuteEvent{} }
 
 type GroupNudgeEvent struct {
@@ -255,7 +256,7 @@ type GroupNudgeEvent struct {
 	DisplayActionImageURL string `json:"display_action_img_url"`
 }
 
-func (e *GroupNudgeEvent) Type() EventType { return GroupNudgeEventType }
+func (e *GroupNudgeEvent) Type() EventType { return EventGroupNudge }
 func (e *GroupNudgeEvent) New() Event      { return &GroupNudgeEvent{} }
 
 type GroupFileUploadEvent struct {
@@ -266,5 +267,5 @@ type GroupFileUploadEvent struct {
 	FileSize int64  `json:"file_size"`
 }
 
-func (e *GroupFileUploadEvent) Type() EventType { return GroupFileUploadEventType }
+func (e *GroupFileUploadEvent) Type() EventType { return EventGroupFileUpload }
 func (e *GroupFileUploadEvent) New() Event      { return &GroupFileUploadEvent{} }
