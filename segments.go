@@ -37,7 +37,7 @@ type TextElement struct {
 }
 
 func (s *TextElement) Type() milky_types.SegmentType { return milky_types.SegmentText }
-func (s *TextElement) MarshalJSON() ([]byte, error)  { return json.Marshal(s) }
+func (s *TextElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) }
 func (s *TextElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewTextSegment(text string) (*milky_types.Segment, error) {
@@ -50,7 +50,7 @@ type MentionElement struct {
 }
 
 func (s *MentionElement) Type() milky_types.SegmentType { return milky_types.SegmentMention }
-func (s *MentionElement) MarshalJSON() ([]byte, error)  { return json.Marshal(s) }
+func (s *MentionElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) }
 func (s *MentionElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewMentionSegment(userID int64) (*milky_types.Segment, error) {
@@ -61,7 +61,7 @@ func NewMentionSegment(userID int64) (*milky_types.Segment, error) {
 type MentionAllElement struct{}
 
 func (s *MentionAllElement) Type() milky_types.SegmentType { return milky_types.SegmentMentionAll }
-func (s *MentionAllElement) MarshalJSON() ([]byte, error)  { return json.Marshal(s) }
+func (s *MentionAllElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) }
 func (s *MentionAllElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewMentionAllSegment() (*milky_types.Segment, error) {
@@ -75,7 +75,7 @@ type FaceElement struct {
 }
 
 func (s *FaceElement) Type() milky_types.SegmentType { return milky_types.SegmentFace }
-func (s *FaceElement) MarshalJSON() ([]byte, error)  { return json.Marshal(s) }
+func (s *FaceElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) }
 func (s *FaceElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewFaceSegment(faceID string, isLarge bool) (*milky_types.Segment, error) {
@@ -88,7 +88,7 @@ type ReplyElement struct {
 }
 
 func (s *ReplyElement) Type() milky_types.SegmentType { return milky_types.SegmentReply }
-func (s *ReplyElement) MarshalJSON() ([]byte, error)  { return json.Marshal(s) }
+func (s *ReplyElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) }
 func (s *ReplyElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewReplySegment(messageSeq int64) (*milky_types.Segment, error) {
@@ -106,7 +106,7 @@ type ImageElement struct {
 }
 
 func (s *ImageElement) Type() milky_types.SegmentType { return milky_types.SegmentImage }
-func (s *ImageElement) MarshalJSON() ([]byte, error)  { return json.Marshal(s) }
+func (s *ImageElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) }
 func (s *ImageElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewImageSegment(
@@ -135,7 +135,7 @@ type RecordElement struct {
 }
 
 func (s *RecordElement) Type() milky_types.SegmentType { return milky_types.SegmentRecord }
-func (s *RecordElement) MarshalJSON() ([]byte, error)  { return json.Marshal(s) }
+func (s *RecordElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) }
 func (s *RecordElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewRecordSegment(
@@ -160,7 +160,7 @@ type VideoElement struct {
 }
 
 func (s *VideoElement) Type() milky_types.SegmentType { return milky_types.SegmentVideo }
-func (s *VideoElement) MarshalJSON() ([]byte, error)  { return json.Marshal(s) }
+func (s *VideoElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) }
 func (s *VideoElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewVideoSegment(
@@ -188,7 +188,7 @@ type ForwardElement struct {
 }
 
 func (s *ForwardElement) Type() milky_types.SegmentType { return milky_types.SegmentForward }
-func (s *ForwardElement) MarshalJSON() ([]byte, error)  { return json.Marshal(s) }
+func (s *ForwardElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) }
 func (s *ForwardElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewForwardSegment(
