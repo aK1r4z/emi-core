@@ -54,7 +54,7 @@ func (s *MentionElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s
 func (s *MentionElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewMentionSegment(userID int64) (*milky_types.Segment, error) {
-	return NewSegment(milky_types.SegmentText, &MentionElement{UserID: userID})
+	return NewSegment(milky_types.SegmentMention, &MentionElement{UserID: userID})
 }
 
 // 提及全体消息段
@@ -65,7 +65,7 @@ func (s *MentionAllElement) MarshalJSON() ([]byte, error)  { return json.Marshal
 func (s *MentionAllElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewMentionAllSegment() (*milky_types.Segment, error) {
-	return NewSegment(milky_types.SegmentText, &MentionAllElement{})
+	return NewSegment(milky_types.SegmentMentionAll, &MentionAllElement{})
 }
 
 // 表情消息段
@@ -79,7 +79,7 @@ func (s *FaceElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) }
 func (s *FaceElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewFaceSegment(faceID string, isLarge bool) (*milky_types.Segment, error) {
-	return NewSegment(milky_types.SegmentText, &FaceElement{FaceID: faceID, IsLarge: isLarge})
+	return NewSegment(milky_types.SegmentFace, &FaceElement{FaceID: faceID, IsLarge: isLarge})
 }
 
 // 回复消息段
@@ -92,7 +92,7 @@ func (s *ReplyElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) 
 func (s *ReplyElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewReplySegment(messageSeq int64) (*milky_types.Segment, error) {
-	return NewSegment(milky_types.SegmentText, &ReplyElement{MessageSeq: messageSeq})
+	return NewSegment(milky_types.SegmentReply, &ReplyElement{MessageSeq: messageSeq})
 }
 
 // 图片消息段
@@ -111,7 +111,7 @@ func NewImageSegment(
 	subType ImageSubtype,
 	summary *string,
 ) (*milky_types.Segment, error) {
-	return NewSegment(milky_types.SegmentText, &ImageElement{
+	return NewSegment(milky_types.SegmentImage, &ImageElement{
 		URI:     uri,
 		SubType: subType,
 		Summary: summary,
@@ -128,7 +128,7 @@ func (s *RecordElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s)
 func (s *RecordElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewRecordSegment(uri string) (*milky_types.Segment, error) {
-	return NewSegment(milky_types.SegmentText, &RecordElement{URI: uri})
+	return NewSegment(milky_types.SegmentRecord, &RecordElement{URI: uri})
 }
 
 // 视频消息段
@@ -142,7 +142,7 @@ func (s *VideoElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) 
 func (s *VideoElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewVideoSegment(uri string, thumbURI *string) (*milky_types.Segment, error) {
-	return NewSegment(milky_types.SegmentText, &VideoElement{URI: uri,ThumbURI: thumbURI})
+	return NewSegment(milky_types.SegmentVideo, &VideoElement{URI: uri,ThumbURI: thumbURI})
 }
 
 // 合并转发消息段
@@ -155,5 +155,5 @@ func (s *ForwardElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s
 func (s *ForwardElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewForwardSegment(messages []milky_types.OutgoingForwardedMessage) (*milky_types.Segment, error) {
-	return NewSegment(milky_types.SegmentText, &ForwardElement{Messages: messages})
+	return NewSegment(milky_types.SegmentForward, &ForwardElement{Messages: messages})
 }
