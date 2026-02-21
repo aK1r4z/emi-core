@@ -97,12 +97,9 @@ func NewReplySegment(messageSeq int64) (*milky_types.Segment, error) {
 
 // 图片消息段
 type ImageElement struct {
-	ResourceID string       `json:"resource_id"` // 资源 ID
-	TempURL    string       `json:"temp_url"`    // 临时 URL
-	Width      int32        `json:"width"`       // 图片宽度
-	Height     int32        `json:"height"`      // 图片高度
-	Summary    string       `json:"summary"`     // 图片预览文本
-	SubType    ImageSubtype `json:"sub_type"`    // 图片类型，可能值：normal sticker
+	URI     string       `json:"uri"`      // 文件 URI，支持 file:// http(s):// base64:// 三种格式
+	SubType ImageSubtype `json:"sub_type"` // 图片类型，可能值：normal sticker，默认值：normal
+	Summary *string      `json:"summary"`  // 图片预览文本
 }
 
 func (s *ImageElement) Type() milky_types.SegmentType { return milky_types.SegmentImage }
@@ -110,97 +107,53 @@ func (s *ImageElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) 
 func (s *ImageElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
 func NewImageSegment(
-	resourceID string,
-	tempURL string,
-	width int32,
-	height int32,
-	summary string,
+	uri string,
 	subType ImageSubtype,
+	summary *string,
 ) (*milky_types.Segment, error) {
 	return NewSegment(milky_types.SegmentText, &ImageElement{
-		ResourceID: resourceID,
-		TempURL:    tempURL,
-		Width:      width,
-		Height:     height,
-		Summary:    summary,
-		SubType:    subType,
+		URI:     uri,
+		SubType: subType,
+		Summary: summary,
 	})
 }
 
 // 语音消息段
 type RecordElement struct {
-	ResourceID string `json:"resource_id"` // 资源 ID
-	TempURL    string `json:"temp_url"`    // 临时 URL
-	Duration   int32  `json:"duration"`    // 语音时长（秒）
+	URI string `json:"uri"` // 文件 URI，支持 file:// http(s):// base64:// 三种格式
 }
 
 func (s *RecordElement) Type() milky_types.SegmentType { return milky_types.SegmentRecord }
 func (s *RecordElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) }
 func (s *RecordElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
-func NewRecordSegment(
-	resourceID string,
-	tempURL string,
-	duration int32,
-) (*milky_types.Segment, error) {
-	return NewSegment(milky_types.SegmentText, &RecordElement{
-		ResourceID: resourceID,
-		TempURL:    tempURL,
-		Duration:   duration,
-	})
+func NewRecordSegment(uri string) (*milky_types.Segment, error) {
+	return NewSegment(milky_types.SegmentText, &RecordElement{URI: uri})
 }
 
 // 视频消息段
 type VideoElement struct {
-	ResourceID string `json:"resource_id"` // 资源 ID
-	TempURL    string `json:"temp_url"`    // 临时 URL
-	Width      int32  `json:"width"`       // 视频宽度
-	Height     int32  `json:"height"`      // 视频高度
-	Duration   int32  `json:"duration"`    // 视频时长（秒）
+	URI string `json:"uri"` // 文件 URI，支持 file:// http(s):// base64:// 三种格式
+	ThumbURI *string `json:"thumb_uri"` // 封面图片 URI
 }
 
 func (s *VideoElement) Type() milky_types.SegmentType { return milky_types.SegmentVideo }
 func (s *VideoElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) }
 func (s *VideoElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
-func NewVideoSegment(
-	resourceID string,
-	tempURL string,
-	width int32,
-	height int32,
-	duration int32,
-) (*milky_types.Segment, error) {
-	return NewSegment(milky_types.SegmentText, &VideoElement{
-		ResourceID: resourceID,
-		TempURL:    tempURL,
-		Width:      width,
-		Height:     height,
-		Duration:   duration,
-	})
+func NewVideoSegment(uri string, thumbURI *string) (*milky_types.Segment, error) {
+	return NewSegment(milky_types.SegmentText, &VideoElement{URI: uri,ThumbURI: thumbURI})
 }
 
 // 合并转发消息段
 type ForwardElement struct {
-	ForwardID string   `json:"forward_id"` // 合并转发 ID
-	Title     string   `json:"title"`      // 合并转发标题
-	Preview   []string `json:"preview"`    // 合并转发预览文本
-	Summary   string   `json:"summary"`    // 合并转发摘要
+	Messages []milky_types.OutgoingForwardedMessage `json:"messages"` // 合并转发消息段
 }
 
 func (s *ForwardElement) Type() milky_types.SegmentType { return milky_types.SegmentForward }
 func (s *ForwardElement) MarshalJSON() ([]byte, error)  { return json.Marshal(*s) }
 func (s *ForwardElement) UnmarshalJSON(b []byte) error  { return json.Unmarshal(b, s) }
 
-func NewForwardSegment(
-	forwardID string,
-	title string,
-	preview []string,
-	summary string,
-) (*milky_types.Segment, error) {
-	return NewSegment(milky_types.SegmentText, &ForwardElement{
-		ForwardID: forwardID,
-		Title:     title,
-		Preview:   preview,
-		Summary:   summary,
-	})
+func NewForwardSegment(messages []milky_types.OutgoingForwardedMessage) (*milky_types.Segment, error) {
+	return NewSegment(milky_types.SegmentText, &ForwardElement{Messages: messages})
 }
