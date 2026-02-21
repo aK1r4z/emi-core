@@ -1,6 +1,6 @@
 package api
 
-import milky "github.com/aK1r4z/emi-core/types"
+import milky_types "github.com/aK1r4z/emi-core/types"
 
 type (
 	// 上传私聊文件
@@ -54,8 +54,8 @@ type (
 	}
 
 	GetGroupFilesResponse struct {
-		Files   []milky.GroupFileEntity   `json:"files"`   // 文件列表
-		Folders []milky.GroupFolderEntity `json:"folders"` // 文件夹列表
+		Files   []milky_types.GroupFileEntity   `json:"files"`   // 文件列表
+		Folders []milky_types.GroupFolderEntity `json:"folders"` // 文件夹列表
 	}
 
 	// 移动群文件

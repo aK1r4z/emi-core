@@ -1,7 +1,7 @@
 package api
 
 import (
-	milky "github.com/aK1r4z/emi-core/types"
+	milky_types "github.com/aK1r4z/emi-core/types"
 )
 
 type (
@@ -35,7 +35,7 @@ type (
 	}
 
 	GetFriendRequestsResponse struct {
-		Requests []milky.FriendRequest `json:"requests"` // 好友请求列表
+		Requests []milky_types.FriendRequest `json:"requests"` // 好友请求列表
 	}
 
 	// 同意好友请求

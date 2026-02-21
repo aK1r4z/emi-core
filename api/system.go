@@ -1,6 +1,6 @@
 package api
 
-import milky "github.com/aK1r4z/emi-core/types"
+import milky_types "github.com/aK1r4z/emi-core/types"
 
 // 协议端使用的 QQ 协议平台，可能值：windows linux macos android_pad android_phone ipad iphone harmony watch
 type QQProtocolType string
@@ -46,7 +46,7 @@ type (
 		Nickname string       `json:"nickname"` // 昵称
 		QID      string       `json:"qid"`      // QID
 		Age      int32        `json:"age"`      // 年龄
-		Gender   milky.Gender `json:"sex"`      // 性别，可能值：male female unknown
+		Gender   milky_types.Gender `json:"sex"`      // 性别，可能值：male female unknown
 		Remark   string       `json:"remark"`   // 备注
 		Bio      string       `json:"bio"`      // 个性签名
 		Level    int32        `json:"level"`    // QQ 等级
@@ -61,7 +61,7 @@ type (
 	}
 
 	GetFriendListResponse struct {
-		Friends []milky.FriendEntity `json:"friends"` // 好友列表
+		Friends []milky_types.FriendEntity `json:"friends"` // 好友列表
 	}
 
 	// 获取好友信息
@@ -71,7 +71,7 @@ type (
 	}
 
 	GetFriendInfoResponse struct {
-		Friend milky.FriendEntity `json:"friend"` // 好友信息
+		Friend milky_types.FriendEntity `json:"friend"` // 好友信息
 	}
 
 	// 获取群列表
@@ -80,7 +80,7 @@ type (
 	}
 
 	GetGroupListResponse struct {
-		Groups []milky.GroupEntity `json:"groups"` // 群列表
+		Groups []milky_types.GroupEntity `json:"groups"` // 群列表
 	}
 
 	// 获取群信息
@@ -90,7 +90,7 @@ type (
 	}
 
 	GetGroupInfoResponse struct {
-		Group milky.GroupEntity `json:"group"` // 群信息
+		Group milky_types.GroupEntity `json:"group"` // 群信息
 	}
 
 	// 获取群成员列表
@@ -100,7 +100,7 @@ type (
 	}
 
 	GetGroupMemberListResponse struct {
-		Members []milky.GroupMemberEntity `json:"members"` // 群成员列表
+		Members []milky_types.GroupMemberEntity `json:"members"` // 群成员列表
 	}
 
 	// 获取群成员信息
@@ -111,7 +111,7 @@ type (
 	}
 
 	GetGroupMemberInfoResponse struct {
-		Member milky.GroupMemberEntity `json:"member"` // 群成员信息
+		Member milky_types.GroupMemberEntity `json:"member"` // 群成员信息
 	}
 
 	// 设置 QQ 账号头像

@@ -1,6 +1,6 @@
 package api
 
-import milky "github.com/aK1r4z/emi-core/types"
+import milky_types "github.com/aK1r4z/emi-core/types"
 
 // 请求对应的通知类型，可能值：join_request invited_join_request
 type GroupRequestNotificationType string
@@ -80,12 +80,13 @@ type (
 
 	KickGroupMemberResponse struct{}
 
+	// 获取群公告列表
 	GetGroupAnnouncementsRequest struct {
 		GroupID int64 `json:"group_id"` // 群号
 	}
 
 	GetGroupAnnouncementsResponse struct {
-		Announcements []milky.GroupAnnouncementEntity `json:"announcements"` // 群公告列表
+		Announcements []milky_types.GroupAnnouncementEntity `json:"announcements"` // 群公告列表
 	}
 
 	// 发送群公告
@@ -113,8 +114,8 @@ type (
 	}
 
 	GetGroupEssenceMessagesResponse struct {
-		Messages []milky.GroupEssenceMessage `json:"messages"` // 精华消息列表
-		IsEnd    bool                        `json:"is_end"`   // 是否已到最后一页
+		Messages []milky_types.GroupEssenceMessage `json:"messages"` // 精华消息列表
+		IsEnd    bool                              `json:"is_end"`   // 是否已到最后一页
 	}
 
 	// 设置群精华消息
@@ -159,8 +160,8 @@ type (
 	}
 
 	GetGroupNotificationsResponse struct {
-		Notifications       []milky.GroupNotification // 获取到的群通知（notification_seq 降序排列），序列号不一定连续
-		NextNotificationSeq *int64                    // 下一页起始通知序列号
+		Notifications       []milky_types.GroupNotification // 获取到的群通知（notification_seq 降序排列），序列号不一定连续
+		NextNotificationSeq *int64                          // 下一页起始通知序列号
 	}
 
 	// 同意入群/邀请他人入群请求
