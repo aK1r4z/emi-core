@@ -1,8 +1,6 @@
 package types
 
-import (
-	"encoding/json"
-)
+import "encoding/json"
 
 type (
 	Gender                string
@@ -10,6 +8,7 @@ type (
 	JoinRequestState      string
 	GroupNotificationType string
 	MessageScene          string
+	SegmentType           string
 )
 
 const (
@@ -35,7 +34,40 @@ const (
 	MessageSceneFriend MessageScene = "friend"
 	MessageSceneGroup  MessageScene = "group"
 	MessageSceneTemp   MessageScene = "temp"
+
+	SegmentText       SegmentType = "text"        // 文本消息 Incoming Outgoing
+	SegmentMention    SegmentType = "mention"     // 提及消息段 Incoming Outgoing
+	SegmentMentionAll SegmentType = "mention_all" // 提及全体消息段 Incoming Outgoing
+	SegmentFace       SegmentType = "face"        // 表情消息段 Incoming Outgoing
+	SegmentReply      SegmentType = "reply"       // 回复消息段 Incoming Outgoing
+	SegmentImage      SegmentType = "image"       // 图片消息段 Incoming Outgoing
+	SegmentRecord     SegmentType = "record"      // 语音消息段 Incoming Outgoing
+	SegmentVideo      SegmentType = "video"       // 视频消息段 Incoming Outgoing
+	SegmentForward    SegmentType = "forward"     // 合并转发消息段 Incoming Outgoing
+	SegmentFile       SegmentType = "file"        // 文件消息段 Incoming
+	SegmentMarketFace SegmentType = "market_face" // 市场表情消息段 Incoming
+	SegmentLightApp   SegmentType = "light_app"   // 小程序消息段 Incoming
+	SegmentXML        SegmentType = "xml"         // XML 消息段 Incoming
 )
+
+// 检查消息段类型能否向外发送
+func (t SegmentType) IsOutgoing() bool {
+	switch t {
+	case
+		SegmentText,
+		SegmentMention,
+		SegmentMentionAll,
+		SegmentFace,
+		SegmentReply,
+		SegmentImage,
+		SegmentRecord,
+		SegmentVideo,
+		SegmentForward:
+		return true
+	default:
+		return false
+	}
+}
 
 type (
 	FriendEntity struct {
@@ -131,6 +163,19 @@ type (
 		IsSet        *bool             `json:"is_set"`         // AdminChange,
 	}
 
+	Segment struct {
+		Type SegmentType     `json:"type"`
+		Data json.RawMessage `json:"data"`
+	}
+
+	IncomingSegment struct {
+		Segment
+	}
+
+	OutgoingSegment struct {
+		Segment
+	}
+
 	IncomingMessage struct {
 		MessageScene MessageScene      `json:"message_scene"`
 		MessageSeq   int64             `json:"message_seq"`
@@ -163,19 +208,9 @@ type (
 		Segments      []IncomingSegment `json:"segments"`
 	}
 
-	IncomingSegment struct {
-		Type SegmentType     `json:"type"`
-		Data json.RawMessage `json:"data"`
-	}
-
 	OutgoingForwardedMessage struct {
 		UserID     int64             `json:"user_id"`
 		SenderName string            `json:"sender_name"`
 		Segments   []OutgoingSegment `json:"segments"`
-	}
-
-	OutgoingSegment struct {
-		Type SegmentType     `json:"type"`
-		Data json.RawMessage `json:"data"`
 	}
 )
