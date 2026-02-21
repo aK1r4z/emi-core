@@ -34,6 +34,9 @@ const (
 func (e *EventType) IsValid() bool {
 	switch *e {
 	case
+		EventBotOffline,
+		EventMessageReceive,
+		EventMessageRecall,
 		EventFriendRequest,
 		EventGroupJoinRequest,
 		EventGroupInvitedJoinRequest,
@@ -192,8 +195,8 @@ func (e *GroupEssenceMessageChangeEvent) New() Event      { return &GroupEssence
 type GroupMemberIncreaseEvent struct {
 	GroupID    int64  `json:"group_id"`
 	UserID     int64  `json:"user_id"`
-	OperatorID *int64 `json:"operator_id"` // 管理员 QQ 号，如果是管理员同意入群
-	InvitorID  *int64 `json:"invitor_id"`  // 邀请者 QQ 号，如果是邀请入群
+	OperatorID *int64 `json:"operator_id,omitempty"` // 管理员 QQ 号，如果是管理员同意入群
+	InvitorID  *int64 `json:"invitor_id,omitempty"`  // 邀请者 QQ 号，如果是邀请入群
 }
 
 func (e *GroupMemberIncreaseEvent) Type() EventType { return EventGroupMemberIncrease }
@@ -202,14 +205,14 @@ func (e *GroupMemberIncreaseEvent) New() Event      { return &GroupMemberIncreas
 type GroupMemberDecreaseEvent struct {
 	GroupID    int64  `json:"group_id"`
 	UserID     int64  `json:"user_id"`
-	OperatorID *int64 `json:"operator_id"`
+	OperatorID *int64 `json:"operator_id,omitempty"`
 }
 
 func (e *GroupMemberDecreaseEvent) Type() EventType { return EventGroupMemberDecrease }
 func (e *GroupMemberDecreaseEvent) New() Event      { return &GroupMemberDecreaseEvent{} }
 
 type GroupNameChangeEvent struct {
-	GroupId      int64  `json:"group_id"`
+	GroupID      int64  `json:"group_id"`
 	NewGroupName string `json:"new_group_name"`
 	OperatorID   int64  `json:"operator_id"`
 }
@@ -239,7 +242,7 @@ func (e *GroupMuteEvent) Type() EventType { return EventGroupMute }
 func (e *GroupMuteEvent) New() Event      { return &GroupMuteEvent{} }
 
 type GroupWholeMuteEvent struct {
-	GroupId    int64 `json:"group_id"`
+	GroupID    int64 `json:"group_id"`
 	OperatorID int64 `json:"operator_id"`
 	IsMute     bool  `json:"is_mute"`
 }

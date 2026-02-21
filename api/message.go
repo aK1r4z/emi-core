@@ -56,13 +56,13 @@ type (
 	GetHistoryMessagesRequest struct {
 		MessageScene    milky_types.MessageScene `json:"message_scene"`     // 消息场景，可能值：friend group temp
 		PeerID          int64              `json:"peer_id"`           // 好友 QQ 号或群号
-		StartMessageSeq *int64             `json:"start_message_seq"` // 起始消息序列号，由此开始从新到旧查询，不提供则从最新消息开始
+		StartMessageSeq *int64             `json:"start_message_seq,omitempty"` // 起始消息序列号，由此开始从新到旧查询，不提供则从最新消息开始
 		Limit           int32              `json:"limit"`             // 期望获取到的消息数量，最多 30 条，默认值：20
 	}
 
 	GetHistoryMessagesResponse struct {
 		Messages       []milky_types.IncomingMessage `json:"messages"`         // 获取到的消息（message_seq 升序排列），部分消息可能不存在，如撤回的消息
-		NextMessageSeq *int64                  `json:"next_message_seq"` // 下一页起始消息序列号
+		NextMessageSeq *int64                  `json:"next_message_seq,omitempty"` // 下一页起始消息序列号
 	}
 
 	// 获取临时资源链接

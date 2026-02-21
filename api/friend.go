@@ -50,7 +50,7 @@ type (
 	RejectFriendRequestRequest struct {
 		InitiatorUID int64   `json:"initiator_uid"` // 请求发起者 UID
 		IsFiltered   bool    `json:"is_filtered"`   // 是否是被过滤的请求，默认值：false
-		Reason       *string `json:"reason"`        // 拒绝理由
+		Reason       *string `json:"reason,omitempty"`        // 拒绝理由
 	}
 
 	RejectFriendRequestResponse struct{}

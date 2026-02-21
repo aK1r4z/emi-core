@@ -93,7 +93,7 @@ type (
 	SendGroupAnnouncementRequest struct {
 		GroupID  int64   `json:"group_id"`  // 群号
 		Content  string  `json:"content"`   // 公告内容
-		ImageURI *string `json:"image_uri"` // 公告附带图像文件 URI，支持 file:// http(s):// base64:// 三种格式
+		ImageURI *string `json:"image_uri,omitempty"` // 公告附带图像文件 URI，支持 file:// http(s):// base64:// 三种格式
 	}
 
 	SendGroupAnnouncementResponse struct{}
@@ -154,14 +154,14 @@ type (
 
 	// 获取群通知列表
 	GetGroupNotificationsRequest struct {
-		StartNotificationSeq *int64 `json:"start_notification_seq"` // 起始通知序列号
+		StartNotificationSeq *int64 `json:"start_notification_seq,omitempty"` // 起始通知序列号
 		IsFiltered           bool   `json:"is_filtered"`            // true 表示只获取被过滤（由风险账号发起）的通知，false 表示只获取未被过滤的通知，默认值：false
 		Limit                int32  `json:"limit"`                  // 获取的最大通知数量，默认值：20
 	}
 
 	GetGroupNotificationsResponse struct {
-		Notifications       []milky_types.GroupNotification // 获取到的群通知（notification_seq 降序排列），序列号不一定连续
-		NextNotificationSeq *int64                          // 下一页起始通知序列号
+		Notifications       []milky_types.GroupNotification `json:"notifications"` // 获取到的群通知（notification_seq 降序排列），序列号不一定连续
+		NextNotificationSeq *int64                          `json:"next_notification_seq,omitempty"`// 下一页起始通知序列号
 	}
 
 	// 同意入群/邀请他人入群请求
@@ -180,7 +180,7 @@ type (
 		NotificationType GroupRequestNotificationType `json:"notification_type"` // 请求对应的通知类型，可能值：join_request invited_join_request
 		GroupID          int64                        `json:"group_id"`          // 请求所在的群号
 		IsFiltered       bool                         `json:"is_filtered"`       // 是否是被过滤的请求，默认值：false
-		Reason           *string                      `json:"reason"`            // 拒绝理由
+		Reason           *string                      `json:"reason,omitempty"`            // 拒绝理由
 	}
 
 	RejectGroupRequestResponse struct{}

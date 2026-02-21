@@ -102,7 +102,7 @@ type (
 		Role          GroupRole `json:"role"`
 		JoinTime      int64     `json:"join_time"`
 		LastSentTime  int64     `json:"last_sent_time"`
-		ShutUpEndTime *int64    `json:"shut_up_end_time"`
+		ShutUpEndTime *int64    `json:"shut_up_end_time,omitempty"`
 	}
 
 	GroupAnnouncementEntity struct {
@@ -111,7 +111,7 @@ type (
 		UserID         int64   `json:"user_id"`
 		Time           int64   `json:"time"`
 		Content        string  `json:"content"`
-		ImageURL       *string `json:"image_url"`
+		ImageURL       *string `json:"image_url,omitempty"`
 	}
 
 	GroupFileEntity struct {
@@ -121,7 +121,7 @@ type (
 		ParentFolderID  string `json:"parent_folder_id"`
 		FileSize        int64  `json:"file_size"`
 		UploadedTime    int64  `json:"uploaded_time"`
-		ExpireTime      *int64 `json:"expire_time"`
+		ExpireTime      *int64 `json:"expire_time,omitempty"`
 		UploaderID      int64  `json:"uploader_id"`
 		DownloadedTimes int32  `json:"downloaded_times"`
 	}
@@ -154,13 +154,13 @@ type (
 		GroupID         int64                 `json:"group_id"`
 		NotificationSeq int64                 `json:"notification_seq"`
 
-		IsFiltered   *bool             `json:"is_filtered"`    // JoinRequest,
-		Comment      *string           `json:"comment"`        // JoinRequest,
-		State        *JoinRequestState `json:"state"`          // JoinRequest, InvitedJoinRequest,
-		InitiatorID  *int64            `json:"initiator_id"`   // JoinRequest, InvitedJoinRequest,
-		OperatorID   *int64            `json:"operator_id"`    // JoinRequest, AdminChange, Kick, InvitedJoinRequest,
-		TargetUserID *int64            `json:"target_user_id"` // AdminChange, Kick, Quit, InvitedJoinRequest,
-		IsSet        *bool             `json:"is_set"`         // AdminChange,
+		IsFiltered   *bool             `json:"is_filtered,omitempty"`    // JoinRequest,
+		Comment      *string           `json:"comment,omitempty"`        // JoinRequest,
+		State        *JoinRequestState `json:"state,omitempty"`          // JoinRequest, InvitedJoinRequest,
+		InitiatorID  *int64            `json:"initiator_id,omitempty"`   // JoinRequest, InvitedJoinRequest,
+		OperatorID   *int64            `json:"operator_id,omitempty"`    // JoinRequest, AdminChange, Kick, InvitedJoinRequest,
+		TargetUserID *int64            `json:"target_user_id,omitempty"` // AdminChange, Kick, Quit, InvitedJoinRequest,
+		IsSet        *bool             `json:"is_set,omitempty"`         // AdminChange,
 	}
 
 	Segment struct {
@@ -184,9 +184,9 @@ type (
 		Time         int64             `json:"time"`
 		Segments     []IncomingSegment `json:"segments"`
 
-		Friend      *FriendEntity      `json:"friend"`
-		Group       *GroupEntity       `json:"group"`
-		GroupMember *GroupMemberEntity `json:"group_member"`
+		Friend      *FriendEntity      `json:"friend,omitempty"`
+		Group       *GroupEntity       `json:"group,omitempty"`
+		GroupMember *GroupMemberEntity `json:"group_member,omitempty"`
 	}
 
 	IncomingForwardedMessage struct {
